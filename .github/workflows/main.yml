@@ -1,7 +1,7 @@
 
 name: Build and Deploy MovieTicketBooking
 
-on:
+on: 
   push:
     branches:
       - main
