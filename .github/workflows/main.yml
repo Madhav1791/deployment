@@ -15,11 +15,18 @@ jobs:
     runs-on: ubuntu-latest
 
     environment:
-      name: PROD
+      name: production
 
     steps:
       - name: Checkout source code
         uses: actions/checkout@v4
+
+      - name: Check project directory
+        run: |
+          pwd
+          ls -la
+          ls -la MovieTicketBooking
+          find . -name pom.xml
 
       - name: Set up Java 17
         uses: actions/setup-java@v4
@@ -27,14 +34,18 @@ jobs:
           distribution: temurin
           java-version: '17'
           cache: maven
+          cache-dependency-path: MovieTicketBooking/pom.xml
 
       - name: Build and Test
+        working-directory: ./MovieTicketBooking
         run: mvn --batch-mode clean verify
 
       - name: Verify WAR file
+        working-directory: ./MovieTicketBooking
         run: ls -lh target/MovieTicketBooking.war
 
       - name: Deploy WAR to Tomcat
+        working-directory: ./MovieTicketBooking
         env:
           TOMCAT_HOST: ${{ secrets.TOMCAT_HOST }}
           TOMCAT_USER: ${{ secrets.TOMCAT_USER }}
