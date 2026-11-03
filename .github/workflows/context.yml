@@ -1,0 +1,13 @@
+name: Context Variables
+on:
+  workflow_dispatch:
+
+jobs:
+  Build:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Display the Variables
+        run: |
+          echo " Branch Name: $GITHUB_REF_NAME "
+          echo " Event Trigger by: $GITHUB_EVENT_NAME "
+          echo " Workspace: $GITHUB_WORKSPACE "
